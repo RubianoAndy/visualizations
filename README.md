@@ -17,7 +17,7 @@
 | **Asignatura** | Ciencia de Datos — Actividad 2 |
 | **Programa** | Maestría en Inteligencia Artificial |
 | **Universidad** | Universidad de La Salle |
-| **Herramientas** | Python 3.12 (Matplotlib + pandas + NumPy) y R 4.6 (graficación base) |
+| **Herramientas** | Python 3.14 (Matplotlib + pandas + NumPy) y R 4.6 (graficación base) |
 | **Año** | 2026 |
 | **Estado** | Completado |
 
@@ -50,7 +50,7 @@ El proyecto desarrolla:
 .
 ├── README.md                                     # Este archivo
 ├── requirements.txt                              # Dependencias de Python
-├── .gitignore                                    # Excluye .venv/, __pycache__/, .Rhistory, .vscode/
+├── .gitignore                                    # Excluye venv/, __pycache__/, .Rhistory, .vscode/
 ├── data/
 │   ├── dataset/
 │   │   └── consumo_energia.csv                   # Dataset generado (semilla 42, reproducible)
@@ -114,17 +114,19 @@ El flujo es **secuencial**: Python regenera los datos, produce las tres tablas e
 
 ### Python
 
-> ⚠️ **Versión:** Python 3.10 o superior (probado en **3.12.10**), con entorno virtual dedicado (`.venv`).
+> ⚠️ **Versión:** Python 3.10 o superior (probado en **3.14.7**), con entorno virtual dedicado (`venv/`).
 
 | Dependencia | Versión probada | Uso |
 |---|---|---|
-| `numpy` | 2.5.1 | Generación del dataset, histogramas y cálculo numérico |
+| `numpy` | 2.5.2 | Generación del dataset, histogramas y cálculo numérico |
 | `pandas` | 3.0.5 | Tablas estadísticas, cuartiles y manejo del CSV |
 | `matplotlib` | 3.11.1 | Generación de todas las figuras de Python |
 
 > ℹ️ El diagrama de caja usa el parámetro `tick_labels` de `Axes.boxplot`, disponible desde **Matplotlib 3.9**.
 
 El resto de entradas de [`requirements.txt`](requirements.txt) son dependencias transitivas de Matplotlib y pandas.
+
+**Nota sobre la actualización a Python 3.14:** el proyecto se desarrolló inicialmente en Python 3.12.10 con NumPy 2.5.1 y se migró a **Python 3.14.7 con NumPy 2.5.2**. La ejecución bajo el nuevo intérprete reproduce las tres tablas de `data/processed/` y las cinco figuras **byte a byte idénticas**, sin advertencias de deprecación: el generador `default_rng(42)` mantiene su secuencia entre versiones menores de NumPy, de modo que la reproducibilidad del laboratorio no depende del intérprete.
 
 ### R
 
@@ -140,8 +142,8 @@ El resto de entradas de [`requirements.txt`](requirements.txt) son dependencias 
 
 ```bash
 # 1. Entorno de Python
-python -m venv .venv
-source .venv/Scripts/activate   # Git Bash (en PowerShell: .venv\Scripts\activate)
+py -3.14 -m venv venv           # o `python -m venv venv` si 3.14 ya es el intérprete por defecto
+source venv/Scripts/activate    # Git Bash (en PowerShell: venv\Scripts\activate)
 pip install -r requirements.txt
 
 # 2. Fase 1: dataset, tablas estadísticas y figuras de Python
