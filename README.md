@@ -67,7 +67,7 @@ El proyecto desarrolla:
 │               ├── python/
 │               │   └── statistics/               # 5 figuras generadas con Matplotlib
 │               └── r/
-│                   └── statistics/               # 4 figuras replicadas con R base
+│                   └── statistics/               # 5 figuras replicadas con R base
 └── utils/
     └── codes/
         ├── statistics.py                         # Genera dataset, tablas estadísticas y figuras (Python)
@@ -98,7 +98,7 @@ El flujo es **secuencial**: Python regenera los datos, produce las tres tablas e
 
 | Salida | Ubicación | Descripción |
 |---|---|---|
-| Figuras | `public/assets/images/figures/r/statistics/` | Histograma, polígono + ojiva, barras por sector y diagrama de caja |
+| Figuras | `public/assets/images/figures/r/statistics/` | Las 5 réplicas: histograma, polígono + ojiva, barras de frecuencia, media vs. mediana y diagrama de caja |
 | Verificación | Consola | Tabla de frecuencias y estadísticos — deben coincidir con los CSV de Python |
 
 **Características clave:**
@@ -185,14 +185,20 @@ En VS Code, el script de R también puede ejecutarse con **Ctrl + Shift + S** (s
 
 ### Réplica en R (graficación base)
 
-| | | |
-|---|---|---|
-| ![Histograma en R](public/assets/images/figures/r/statistics/hist_sturges_central_tendency.png) | ![Barras de frecuencia en R](public/assets/images/figures/r/statistics/bar_freq_by_sector.png) | ![Boxplot en R](public/assets/images/figures/r/statistics/boxplot_dispersion_by_sector.png) |
-| Histograma de Sturges | Frecuencia por sector | Dispersión por sector |
+Las cinco figuras de Matplotlib tienen su equivalente en graficación base de R, construidas sobre estadísticos recalculados de forma independiente.
+
+| | |
+|---|---|
+| ![Histograma en R](public/assets/images/figures/r/statistics/hist_sturges_central_tendency.png) | ![Barras de frecuencia en R](public/assets/images/figures/r/statistics/bar_freq_by_sector.png) |
+| **Histograma de Sturges** — mismas 8 clases y mismas medidas de posición | **Frecuencia por sector** — n (%) sobre cada barra |
+| ![Media y mediana en R](public/assets/images/figures/r/statistics/bar_mean_median_by_sector.png) | ![Boxplot en R](public/assets/images/figures/r/statistics/boxplot_dispersion_by_sector.png) |
+| **Media vs. mediana** — `barplot(beside = TRUE)` sobre `tapply` | **Dispersión por sector** — caja, media y σ |
 
 <div align="center">
     <img src="public/assets/images/figures/r/statistics/freq_polygon_ogive.png" width="820" alt="Polígono de frecuencias y ojiva en R">
 </div>
+
+**Polígono de frecuencias y ojiva en R** — dos paneles con `par(mfrow = c(1, 2))`; la misma lectura puntual y acumulada de la tabla de frecuencias recalculada con `hist(..., plot = FALSE)$counts`.
 
 ---
 

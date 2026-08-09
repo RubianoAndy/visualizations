@@ -149,9 +149,36 @@ text(x = bar_pos, y = sector_freq + max(sector_freq) * 0.07,
      cex = 0.8)
 dev.off()
 
-#' Diagrama de caja con la media superpuesta, en dos pasadas.
+#' Orden de sectores por escala de consumo (no alfabetico) para que las
+#' figuras siguientes coincidan con las de Python.
 sector_order <- c("Residencial", "Comercial", "Industrial")
 df$sector <- factor(df$sector, levels = sector_order)
+
+#' Barras agrupadas media vs mediana por sector, en dos pasadas.
+#'
+#' La cercania de ambas barras dentro de cada grupo evidencia simetria local
+#' pese a la asimetria global de la distribucion.
+central_matrix <- rbind(
+  Media = tapply(x, df$sector, mean),
+  Mediana = tapply(x, df$sector, median)
+)
+png(file.path(figures_dir, "bar_mean_median_by_sector.png"),
+    width = 1950, height = 1080, res = 300, type = "cairo")
+par(mar = c(4, 4, 3, 1))
+bar_pos <- barplot(central_matrix, beside = TRUE, col = NA, border = NA,
+                   ylim = c(0, max(central_matrix) * 1.2),
+                   main = "Media y mediana del consumo por sector (R)",
+                   xlab = "Sector", ylab = "Consumo (kWh/mes)")
+grid(nx = NA, ny = NULL)
+barplot(central_matrix, beside = TRUE, col = c("#2b8cbe", "#a6bddb"),
+        add = TRUE, axes = FALSE)
+text(x = bar_pos, y = central_matrix + max(central_matrix) * 0.04,
+     labels = sprintf("%.0f", central_matrix), cex = 0.7)
+legend("topleft", cex = 0.75, bty = "n", fill = c("#2b8cbe", "#a6bddb"),
+       legend = c("Media", "Mediana"))
+dev.off()
+
+#' Diagrama de caja con la media superpuesta, en dos pasadas.
 png(file.path(figures_dir, "boxplot_dispersion_by_sector.png"),
     width = 1950, height = 1140, res = 300, type = "cairo")
 par(mar = c(4, 4, 3, 1))
