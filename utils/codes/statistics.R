@@ -11,7 +11,8 @@
 
 #' Rutas del proyecto (ejecutar desde la raiz del proyecto).
 data_path <- "data/dataset/consumo_energia.csv"
-figures_dir <- file.path("public", "assets", "images", "figures", "r", "statistics")
+figures_dir <- file.path("public", "assets", "images", "figures", "r",
+                         "statistics")
 if (!dir.exists(figures_dir)) {
   dir.create(figures_dir, recursive = TRUE)
 }
@@ -77,7 +78,8 @@ summary_stats <- function(values) {
 }
 
 groups <- c("Residencial", "Comercial", "Industrial")
-stats_by_group <- t(sapply(groups, function(s) summary_stats(x[df$sector == s])))
+stats_by_group <- t(sapply(groups,
+                           function(s) summary_stats(x[df$sector == s])))
 stats_global <- summary_stats(x)
 print(rbind(stats_by_group, Global = stats_global))
 cat("Moda del sector (variable nominal):",
@@ -97,7 +99,8 @@ png(file.path(figures_dir, "hist_sturges_central_tendency.png"),
     width = 1950, height = 1140, res = 300, type = "cairo")
 par(mar = c(4, 4, 3, 1))
 hist(x, breaks = edges, border = NA, col = NA, include.lowest = TRUE,
-     main = sprintf("Distribución de frecuencias del consumo (R, %d clases)", k),
+     main = sprintf("Distribución de frecuencias del consumo (R, %d clases)",
+                    k),
      xlab = "Consumo (kWh/mes)", ylab = "Frecuencia absoluta (clientes)")
 grid()
 hist(x, breaks = edges, col = "#2c7fb8", border = "white",
